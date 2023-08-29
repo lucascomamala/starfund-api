@@ -11,6 +11,26 @@ import { Fighter } from "../entities/Fighter";
  * @apiName GetFighters
  * @apiGroup Fighter
  *
+ * @apiSuccess {Fighter[]} fighters List of Fighters 
+ *
+ */
+export const getFighters = async (req: Request, res: Response) => {
+  try {
+    return res.json(await Fighter.find())
+  } catch (error) {
+    if (error instanceof Error)
+      return res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * @api {get} /fighters/:id Get a fighter by id
+ * @apiVersion 0.1.0
+ * @apiName GetFighter
+ * @apiGroup Fighter
+ * 
+ * @apiParam {Number} id <code>id</code> of the fighter.
+ *
  * @apiSuccess {String} name Fighter's full name
  * @apiSuccess {Number} wins=0 Number of wins
  * @apiSuccess {Number} losses=0 Number of losses
@@ -26,9 +46,10 @@ import { Fighter } from "../entities/Fighter";
  * @apiSuccess {String} image_path Path to the Fighter's image
  *
  */
-export const getFighters = async (req: Request, res: Response) => {
+export const getFighter = async (req: Request, res: Response) => {
   try {
-    return res.json(await Fighter.find())
+    console.log(req.params.id)
+    return res.json(await Fighter.findOneBy({ fighter_id: req.params.id as any }));
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
