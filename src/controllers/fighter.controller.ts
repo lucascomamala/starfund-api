@@ -3,7 +3,6 @@ import { ConnectionClosedEvent } from "typeorm";
 
 import { Fighter } from "../entities/Fighter";
 
-
 // TODO: Implement pagination
 /**
  * @api {get} /fighters Get a list of all the Fighters
@@ -11,12 +10,12 @@ import { Fighter } from "../entities/Fighter";
  * @apiName GetFighters
  * @apiGroup Fighter
  *
- * @apiSuccess {Fighter[]} fighters List of Fighters 
+ * @apiSuccess {Fighter[]} fighters List of Fighters
  *
  */
 export const getFighters = async (req: Request, res: Response) => {
   try {
-    return res.json(await Fighter.find())
+    return res.json(await Fighter.find());
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
@@ -28,7 +27,7 @@ export const getFighters = async (req: Request, res: Response) => {
  * @apiVersion 0.1.0
  * @apiName GetFighter
  * @apiGroup Fighter
- * 
+ *
  * @apiParam {Number} id <code>id</code> of the fighter.
  *
  * @apiSuccess {String} name Fighter's full name
@@ -45,11 +44,15 @@ export const getFighters = async (req: Request, res: Response) => {
  * @apiSuccess {Number} last_weight_grams Fighter's last weight in grams
  * @apiSuccess {String} image_path Path to the Fighter's image
  *
+ * @apiError FighterNotFound   The <code>id</code> of the Fighter was not found.
+ *
  */
 export const getFighter = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id)
-    return res.json(await Fighter.findOneBy({ fighter_id: req.params.id as any }));
+    console.log(req.params.id);
+    return res.json(
+      await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) })
+    );
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
@@ -77,7 +80,7 @@ export const getFighter = async (req: Request, res: Response) => {
  * @apiBody {Number} last_weight_grams Fighter's last weight in grams
  * @apiBody {String} image_path Path to the Fighter's image
  *
- * @apiSuccess {Number} id         The new Users-ID.
+ * @apiSuccess {Fighter} fighter         The newly created fighter.
  *
  */
 export const createFighter = async (req: Request, res: Response) => {
@@ -114,7 +117,65 @@ export const createFighter = async (req: Request, res: Response) => {
 
   try {
     await f.save();
-    return res.json(f);
+    return res.status(201).json(f);
+  } catch (error) {
+    if (error instanceof Error)
+      return res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * @api {put} /fighters/:id Updates a Fighter with the given id
+ * @apiVersion 0.1.0
+ * @apiName UpdateFighter
+ * @apiGroup Fighter
+ * @apiPermission none
+ *
+ * @apiParam {Number} id <code>id</code> of the fighter.
+ *
+ * @apiBody {String} name Fighter's full name
+ * @apiBody {Number} wins Number of wins
+ * @apiBody {Number} losses Number of losses
+ * @apiBody {Number} knockouts Number of knockouts
+ * @apiBody {Number} submissions Number of submissions
+ * @apiBody {String} weight_class Fighter's weight class
+ * @apiBody {String} nationality Fighter's nationality
+ * @apiBody {String} team Fighter's team
+ * @apiBody {String} nickname Fighter's nickname
+ * @apiBody {Date} date_of_birth Fighter's date of birth
+ * @apiBody {Number} height_cm Fighter's height in centimeters
+ * @apiBody {Number} last_weight_grams Fighter's last weight in grams
+ * @apiBody {String} image_path Path to the Fighter's image
+ *
+ * @apiSuccess {Fighter} fighter        The updated Fighter.
+ *
+ * @apiError FighterNotFound   The <code>id</code> of the Fighter was not found.
+ *
+ */
+export const updateFighter = async (req: Request, res: Response) => {
+  const {
+    name,
+    wins,
+    losses,
+    knockouts,
+    submissions,
+    weight_class,
+    nationality,
+    team,
+    nickname,
+    date_of_birth,
+    height_cm,
+    last_weight_grams,
+    image_path,
+  } = req.body;
+
+  const f = await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) });
+
+  if (!f) return res.status(404).json({ message: "Fighter not found" });
+
+  try {
+    await Fighter.update({ fighter_id: parseInt(req.params.id) }, req.body);
+    return res.status(200).json(f);
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });

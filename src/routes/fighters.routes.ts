@@ -1,11 +1,21 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import { createFighter, getFighters, getFighter } from '../controllers/fighter.controller';
+import {
+  createFighter,
+  getFighters,
+  getFighter,
+  updateFighter,
+} from "../controllers/fighter.controller";
 
 const router = Router();
 
+// Create a fighter
+router.post("/fighters", createFighter);
+// Read all fighters
 router.get("/fighters", getFighters);
+// Read a fighter by id
 router.get("/fighters/:id", getFighter);
-router.post('/fighters', createFighter);
+// Update a fighter by id
+router.put("/fighters/:id", updateFighter);
 
 export default router;
