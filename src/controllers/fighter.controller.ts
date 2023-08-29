@@ -3,7 +3,6 @@ import { ConnectionClosedEvent } from "typeorm";
 
 import { Fighter } from "../entities/Fighter";
 
-// TODO: Implement pagination
 /**
  * @api {get} /fighters Get a list of all the Fighters
  * @apiVersion 0.1.0
@@ -80,44 +79,42 @@ export const getFighter = async (req: Request, res: Response) => {
  * @apiBody {Number} last_weight_grams Fighter's last weight in grams
  * @apiBody {String} image_path Path to the Fighter's image
  *
- * @apiSuccess {Fighter} fighter         The newly created fighter.
- *
  */
 export const createFighter = async (req: Request, res: Response) => {
-  const {
-    name,
-    wins,
-    losses,
-    knockouts,
-    submissions,
-    weight_class,
-    nationality,
-    team,
-    nickname,
-    date_of_birth,
-    height_cm,
-    last_weight_grams,
-    image_path,
-  } = req.body;
-
-  const f = new Fighter();
-  f.name = name;
-  f.wins = wins;
-  f.losses = losses;
-  f.knockouts = knockouts;
-  f.submissions = submissions;
-  f.weight_class = weight_class;
-  f.nationality = nationality;
-  f.team = team;
-  f.nickname = nickname;
-  f.date_of_birth = date_of_birth;
-  f.height_cm = height_cm;
-  f.last_weight_grams = last_weight_grams;
-  f.image_path = image_path;
-
   try {
+    const {
+      name,
+      wins,
+      losses,
+      knockouts,
+      submissions,
+      weight_class,
+      nationality,
+      team,
+      nickname,
+      date_of_birth,
+      height_cm,
+      last_weight_grams,
+      image_path,
+    } = req.body;
+
+    const f = new Fighter();
+    f.name = name;
+    f.wins = wins;
+    f.losses = losses;
+    f.knockouts = knockouts;
+    f.submissions = submissions;
+    f.weight_class = weight_class;
+    f.nationality = nationality;
+    f.team = team;
+    f.nickname = nickname;
+    f.date_of_birth = date_of_birth;
+    f.height_cm = height_cm;
+    f.last_weight_grams = last_weight_grams;
+    f.image_path = image_path;
+
     await f.save();
-    return res.status(201).json(f);
+    return res.status(201).json({ message: "Fighter created" });
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
@@ -147,35 +144,41 @@ export const createFighter = async (req: Request, res: Response) => {
  * @apiBody {Number} last_weight_grams Fighter's last weight in grams
  * @apiBody {String} image_path Path to the Fighter's image
  *
- * @apiSuccess {Fighter} fighter        The updated Fighter.
- *
  * @apiError FighterNotFound   The <code>id</code> of the Fighter was not found.
  *
  */
 export const updateFighter = async (req: Request, res: Response) => {
-  const {
-    name,
-    wins,
-    losses,
-    knockouts,
-    submissions,
-    weight_class,
-    nationality,
-    team,
-    nickname,
-    date_of_birth,
-    height_cm,
-    last_weight_grams,
-    image_path,
-  } = req.body;
-
-  const f = await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) });
-
-  if (!f) return res.status(404).json({ message: "Fighter not found" });
-
   try {
+    const f = await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) });
+    if (!f) return res.status(404).json({ message: "Fighter not found" });
+
     await Fighter.update({ fighter_id: parseInt(req.params.id) }, req.body);
-    return res.status(200).json(f);
+    return res.status(200).json({ message: "Fighter updated" });
+  } catch (error) {
+    if (error instanceof Error)
+      return res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * @api {delete} /fighters/:id Deletes a Fighter with the given id
+ * @apiVersion 0.1.0
+ * @apiName FeleteFighter
+ * @apiGroup Fighter
+ * @apiPermission none
+ *
+ * @apiParam {Number} id <code>id</code> of the fighter.
+ *
+ * @apiError FighterNotFound   The <code>id</code> of the Fighter was not found.
+ *
+ */
+export const deleteFighter = async (req: Request, res: Response) => {
+  try {
+    const f = await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) });
+    if (!f) return res.status(404).json({ message: "Fighter not found" });
+
+    await Fighter.delete({ fighter_id: parseInt(req.params.id) });
+    return res.status(200).json({ message: "Fighter deleted" });
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });

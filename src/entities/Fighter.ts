@@ -1,6 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BaseEntity,
+} from "typeorm";
 
-@Entity('fighters')
+@Entity("fighters")
 export class Fighter extends BaseEntity {
   @PrimaryGeneratedColumn()
   fighter_id: number;
@@ -14,17 +21,17 @@ export class Fighter extends BaseEntity {
   wins: number;
 
   @Column({
-      default: 0,
+    default: 0,
   })
   losses: number;
 
   @Column({
-      default: 0,
+    default: 0,
   })
   knockouts: number;
 
   @Column({
-      default: 0,
+    default: 0,
   })
   submissions: number;
 
