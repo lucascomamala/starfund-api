@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { createFighter } from '../controllers/fighters.controllers';
+import { createFighter } from '../controllers/fighters.controller';
 
 const router = Router();
 
