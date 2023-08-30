@@ -4,7 +4,7 @@ import { Fighter } from "../entities/Fighter";
 import { Fight } from "../entities/Fight";
 
 /**
- * @api {post} /event Create a new Event
+ * @api {post} /events Create a new Event
  * @apiVersion 0.1.0
  * @apiName CreateEvent
  * @apiGroup Event
@@ -48,7 +48,7 @@ export const createEvent = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {get} /event Get a list of all Events
+ * @api {get} /events Get a list of all Events
  * @apiVersion 0.1.0
  * @apiName GetEvents
  * @apiGroup Event
@@ -66,7 +66,7 @@ export const getEvents = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {get} /event/:id Get an event by id
+ * @api {get} /events/:id Get an event by id
  * @apiVersion 0.1.0
  * @apiName GetEvent
  * @apiGroup Event
@@ -105,7 +105,7 @@ export const getEvent = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {put} /event/:id Update an Event with the given id
+ * @api {put} /events/:id Update an Event with the given id
  * @apiVersion 0.1.0
  * @apiName UpdateEvent
  * @apiGroup Event
@@ -160,7 +160,7 @@ export const updateEvent = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {delete} /event/:id Delete an Event with the given id
+ * @api {delete} /events/:id Delete an Event with the given id
  * @apiVersion 0.1.0
  * @apiName DeleteEvent
  * @apiGroup Event

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { Fighter } from "../entities/Fighter";
 
 /**
- * @api {get} /fighter Get a list of all the Fighters
+ * @api {get} /fighters Get a list of all the Fighters
  * @apiVersion 0.1.0
  * @apiName GetFighters
  * @apiGroup Fighter
@@ -21,7 +21,7 @@ export const getFighters = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {get} /fighter/:id Get a fighter by id
+ * @api {get} /fighters/:id Get a fighter by id
  * @apiVersion 0.1.0
  * @apiName GetFighter
  * @apiGroup Fighter
@@ -55,7 +55,7 @@ export const getFighter = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {post} /fighter Create a new Fighter
+ * @api {post} /fighters Create a new Fighter
  * @apiVersion 0.1.0
  * @apiName CreateFighter
  * @apiGroup Fighter
@@ -118,7 +118,7 @@ export const createFighter = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {put} /fighter/:id Updates a Fighter with the given id
+ * @api {put} /fighters/:id Updates a Fighter with the given id
  * @apiVersion 0.1.0
  * @apiName UpdateFighter
  * @apiGroup Fighter

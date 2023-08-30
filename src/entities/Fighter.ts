@@ -6,7 +6,6 @@ import {
   UpdateDateColumn,
   BaseEntity,
   ManyToMany,
-  ManyToOne,
   JoinTable,
   OneToMany,
 } from "typeorm";
@@ -58,8 +57,8 @@ export class Fighter extends BaseEntity {
   submissions: number;
 
   @Column({ nullable: true })
-  @IsNotEmpty()
   @IsEnum(WeightClass)
+  @IsNotEmpty()
   weight_class: string;
 
   @Column({ nullable: true })
