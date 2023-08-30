@@ -11,11 +11,8 @@ import {
   IsNotEmpty,
   IsInt,
   Min,
-  Max,
   IsOptional,
   Length,
-  IsDateString,
-  IsUrl,
 } from "class-validator";
 
 import { Fighter } from "./Fighter"
@@ -24,7 +21,7 @@ import { Event } from "./Event"
 @Entity()
 export class Fight extends BaseEntity {
   @PrimaryGeneratedColumn()
-  fight_id: number;
+  id: number;
 
   // Define the relationship with the Event entity
   @ManyToOne(() => Event, (event: Event) => event.fights)

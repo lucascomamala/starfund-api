@@ -15,7 +15,7 @@ import WeightClass from "../utils/weight_class";
 @Entity()
 export class Ranking extends BaseEntity {
   @PrimaryGeneratedColumn()
-  ranking_id: number;
+  id: number;
 
   @Column()
   @IsNotEmpty()
@@ -23,7 +23,7 @@ export class Ranking extends BaseEntity {
   category: WeightClass;
 
   // Define the relationship with the Fighter entity
-  @ManyToOne(() => Fighter)
+  @ManyToOne(() => Fighter, (fighter: Fighter) => fighter.rankings)
   @IsNotEmpty()
   fighter: Fighter;
 

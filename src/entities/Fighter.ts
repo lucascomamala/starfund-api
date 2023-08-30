@@ -5,6 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  ManyToMany,
+  ManyToOne,
+  JoinTable,
   OneToMany,
 } from "typeorm";
 import {
@@ -20,7 +23,7 @@ import {
 
 import { Fight } from "./Fight";
 import { Ranking } from "./Ranking";
-import { EventFighter } from "./EventFighter";
+import { Event } from "./Event";
 
 import WeightClass from "../utils/weight_class";
 
@@ -105,9 +108,12 @@ export class Fighter extends BaseEntity {
   @OneToMany(() => Ranking, (ranking) => ranking.fighter)
   rankings: Ranking[];
 
-  // Define the relationship with the EventFighter entity (join table)
-  @OneToMany(() => EventFighter, (eventFighter) => eventFighter.fighter)
-  eventFighters: EventFighter[];
+  // Define the relationship with the Event entity
+  @ManyToMany(() => Event, (event) => event.fighters, {
+    cascade: true,
+  })
+  @JoinTable()
+  events: Event[];
 
   @CreateDateColumn()
   createdAt: Date;

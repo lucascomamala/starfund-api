@@ -6,11 +6,12 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from "typeorm";
 import { IsNotEmpty, IsDateString, IsOptional, Length } from "class-validator";
 
 import { Fight } from "./Fight";
-import { EventFighter } from "./EventFighter";
+import { Fighter } from "./Fighter";
 
 @Entity()
 export class Event extends BaseEntity {
@@ -38,9 +39,9 @@ export class Event extends BaseEntity {
   @OneToMany(() => Fight, (fight: Fight) => fight.event)
   fights: Fight[];
 
-  // Define the relationship with the EventFighter entity (join table)
-  @OneToMany(() => EventFighter, (eventFighter) => eventFighter.event)
-  eventFighters: EventFighter[];
+  // Define the relationship with the Fighter entity
+  @ManyToMany(() => Fighter, (fighter) => fighter.events)
+  fighters: Fighter[];
 
   @CreateDateColumn()
   createdAt: Date;
