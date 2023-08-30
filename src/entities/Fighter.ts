@@ -5,9 +5,19 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  OneToMany,
 } from "typeorm";
+import {
+  IsNotEmpty,
+  IsDateString,
+  IsInt,
+  IsOptional,
+  IsUrl,
+  Min,
+  Length,
+} from "class-validator";
 
-import { IsInt, Length, Max, Min } from "class-validator";
+import { Fight } from "./Fight";
 
 @Entity()
 export class Fighter extends BaseEntity {
@@ -15,75 +25,73 @@ export class Fighter extends BaseEntity {
   id: number;
 
   @Column()
-  @Length(2, 40)
+  @IsNotEmpty()
+  @Length(2, 50)
   name: string;
 
-  @Column({
-    default: 0,
-  })
-  wins: number;
-
-  @Column({
-    default: 0,
-  })
-  losses: number;
-
-  @Column({
-    default: 0,
-  })
-  knockouts: number;
-
-  @Column({
-    default: 0,
-  })
-  submissions: number;
-
-  @Column({
-    nullable: true,
-  })
-  weight_class: string;
-
-  @Column({
-    nullable: true,
-  })
-  nationality: string;
-
-  @Column({
-    nullable: true,
-  })
-  team: string;
-
-  @Column({
-    nullable: true,
-  })
-  nickname: string;
-
-  @Column({
-    nullable: true,
-    type: "date",
-  })
-  date_of_birth: Date;
-
-  @Column({
-    nullable: true,
-  })
-  @IsInt()
-  @Min(40000)
-  @Max(200000)
-  last_weight_grams: number;
-
-  @Column({
-    nullable: true,
-  })
+  @Column({ default: 0 })
   @IsInt()
   @Min(0)
-  @Max(350)
+  wins: number;
+
+  @Column({ default: 0 })
+  @IsInt()
+  @Min(0)
+  losses: number;
+
+  @Column({ default: 0 })
+  @IsInt()
+  @Min(0)
+  knockouts: number;
+
+  @Column({ default: 0 })
+  @IsInt()
+  @Min(0)
+  submissions: number;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  weight_class: string;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  nationality: string;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  team: string;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  nickname: string;
+
+  @Column({ nullable: true, type: "date" })
+  @IsOptional()
+  @IsDateString()
+  date_of_birth: Date;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  last_weight_grams: number;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
   height_cm: number;
 
-  @Column({
-    nullable: true,
-  })
+  @Column({ nullable: true })
+  @IsOptional()
+  @IsUrl()
   image_path: string;
+
+  @OneToMany(() => Fight, (fight: Fight) => fight.winner)
+  fightsAsWinner: Fight[];
+
+  @OneToMany(() => Fight, (fight: Fight) => fight.loser)
+  fightsAsLoser: Fight[];
 
   @CreateDateColumn()
   createdAt: Date;
