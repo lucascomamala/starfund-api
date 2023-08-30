@@ -20,6 +20,7 @@ import {
 
 import { Fight } from "./Fight";
 import { Ranking } from "./Ranking";
+import { EventFighter } from "./EventFighter";
 
 import WeightClass from "../utils/weight_class";
 
@@ -100,6 +101,9 @@ export class Fighter extends BaseEntity {
 
   @OneToMany(() => Ranking, (ranking) => ranking.fighter)
   rankings: Ranking[];
+
+  @OneToMany(() => EventFighter, (eventFighter) => eventFighter.fighter)
+  eventFighters: EventFighter[];
 
   @CreateDateColumn()
   createdAt: Date;

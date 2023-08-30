@@ -10,6 +10,7 @@ import {
 import { IsNotEmpty, IsDateString, IsOptional, Length } from "class-validator";
 
 import { Fight } from "./Fight";
+import { EventFighter } from "./EventFighter";
 
 @Entity()
 export class Event extends BaseEntity {
@@ -36,6 +37,9 @@ export class Event extends BaseEntity {
   // Define the relationship with the Fight entity
   @OneToMany(() => Fight, (fight: Fight) => fight.event)
   fights: Fight[];
+
+  @OneToMany(() => EventFighter, (eventFighter) => eventFighter.event)
+  eventFighters: EventFighter[];
 
   @CreateDateColumn()
   createdAt: Date;
