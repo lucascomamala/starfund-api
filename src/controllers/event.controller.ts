@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Event } from "../entities/Event";
 import { Fighter } from "../entities/Fighter";
 import { Fight } from "../entities/Fight";
+import { MoreThanOrEqual } from "typeorm";
 
 /**
  * @api {post} /events Create a new Event
@@ -184,5 +185,32 @@ export const deleteEvent = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * @api {get} /events Get a list of all upcoming Events
+ * @apiVersion 0.1.0
+ * @apiName GetUpcomingEvents
+ * @apiGroup Event
+ *
+ * @apiSuccess {Event[]} events List of Events
+ */
+export const getUpcomingEvents = async (req: Request, res: Response) => {
+  try {
+    const today = new Date();
+
+    // Fetch upcoming events that have a date greater than or equal to today
+    console.log('1')
+    const upcomingEvents = await Event.find({
+      where: {
+        date: MoreThanOrEqual(today),
+      },
+    });
+    console.log("1");
+
+    return res.json(upcomingEvents);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
