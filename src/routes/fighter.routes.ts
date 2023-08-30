@@ -6,6 +6,7 @@ import {
   getFighter,
   updateFighter,
   deleteFighter,
+  getFighterStatistics,
 } from "../controllers/fighter.controller";
 
 const router = Router();
@@ -20,5 +21,7 @@ router.get("/fighters/:id", getFighter);
 router.put("/fighters/:id", updateFighter);
 // Delete a fighter by id
 router.delete("/fighters/:id", deleteFighter);
+// Get a fighter's stats by id
+router.get("/fighters/:id/statistics", getFighterStatistics);
 
 export default router;

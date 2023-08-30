@@ -13,7 +13,7 @@ import { Fighter } from "../entities/Fighter";
  */
 export const getFighters = async (req: Request, res: Response) => {
   try {
-    return res.json(await Fighter.find());
+    return res.json(await Fighter.find({ relations: ["rankings", "fightsAsWinner", "fightsAsLoser"]}));
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
@@ -52,7 +52,7 @@ export const getFighter = async (req: Request, res: Response) => {
         where: {
           id: parseInt(req.params.id),
         },
-        relations: ["rankings"],
+        relations: ["rankings", "fightsAsWinner", "fightsAsLoser"],
       })
     );
   } catch (error) {
@@ -185,5 +185,60 @@ export const deleteFighter = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * @api {get} /fighters/:id/statistics Get a fighter's statistics by id
+ * @apiVersion 0.1.0
+ * @apiName GetFighterStatistics
+ * @apiGroup Fighter
+ *
+ * @apiParam {Number} id <code>id</code> of the fighter.
+ *
+ * @apiSuccess {Object} fighter object
+ * @apiSuccess {Number} fighter.id Fighter's id
+ * @apiSuccess {String} fighter.name Fighter's full name
+ * @apiSuccess {Object} statistics object
+ * @apiSuccess {Number} statistics.totalFights Total number of fights
+ * @apiSuccess {Number} statistics.wins Number of wins
+ * @apiSuccess {Number} statistics.losses Number of losses
+ *
+ * @apiError FighterNotFound   The <code>id</code> of the Fighter was not found.
+ *
+ */
+export const getFighterStatistics = async (req: Request, res: Response) => {
+  try {
+    const fighterId = parseInt(req.params.id);
+    
+    // Fetch the fighter along with their fights
+    const fighter = await Fighter.findOne({
+      where: {
+        id: fighterId,
+      },
+      relations: ["fightsAsWinner", "fightsAsLoser"],
+    });
+    
+    if (!fighter) {
+      return res.status(404).json({ message: "Fighter not found" });
+    }
+    
+    const wins = fighter.fightsAsWinner.length;
+    const losses = fighter.fightsAsLoser.length;
+    const totalFights = wins + losses;
+
+    return res.json({
+      fighter: {
+        id: fighter.id,
+        name: fighter.name,
+      },
+      statistics: {
+        totalFights,
+        wins,
+        losses,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
