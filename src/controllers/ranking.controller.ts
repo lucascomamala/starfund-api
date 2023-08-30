@@ -69,7 +69,7 @@ export const createRanking = async (req: Request, res: Response) => {
     const ranking = new Ranking();
     ranking.category = category;
     ranking.rank = rank;
-    if (fighter_id) ranking.fighter = fighter_id;
+    ranking.fighter = fighter_id;
 
     await ranking.save();
     return res.status(201).json({ message: "Ranking created" });
@@ -103,6 +103,7 @@ export const updateRanking = async (req: Request, res: Response) => {
 
     ranking.category = req.body.category;
     ranking.rank = req.body.rank;
+    ranking.fighter = req.body.fighter_id;
 
     await ranking.save();
     return res.status(200).json({ message: "Ranking updated" });

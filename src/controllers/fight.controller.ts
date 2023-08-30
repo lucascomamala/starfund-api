@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+
 import { Fight } from "../entities/Fight";
+import { updateFighterRankings } from "../utils/update_fighter_rankings";
 
 /**
  * @api {get} /fights Get a list of all Fights
@@ -75,6 +77,12 @@ export const createFight = async (req: Request, res: Response) => {
       win_condition,
     } = req.body;
 
+    if (!event_id || !winner_id || !loser_id)
+      return res.status(400).json({ message: "Missing required fields" });
+
+    if (winner_id === loser_id)
+      return res.status(400).json({ message: "Winner and loser can't be the same" });
+
     const fight = new Fight();
     fight.event = event_id;
     fight.winner = winner_id;
@@ -82,6 +90,9 @@ export const createFight = async (req: Request, res: Response) => {
     fight.last_round = last_round;
     fight.referee = referee;
     fight.win_condition = win_condition;
+
+    // Calls our function to update the fighter rankings
+    await updateFighterRankings(winner_id, loser_id);
 
     await fight.save();
     return res.status(201).json({ message: "Fight created" });

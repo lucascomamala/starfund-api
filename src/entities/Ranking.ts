@@ -29,6 +29,7 @@ export class Ranking extends BaseEntity {
 
   @Column()
   @IsInt()
+  @IsNotEmpty()
   rank: number;
 
   @CreateDateColumn()

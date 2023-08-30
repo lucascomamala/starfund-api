@@ -47,7 +47,14 @@ export const getFighters = async (req: Request, res: Response) => {
  */
 export const getFighter = async (req: Request, res: Response) => {
   try {
-    return res.json(await Fighter.findOneBy({ id: parseInt(req.params.id) }));
+    return res.json(
+      await Fighter.findOne({
+        where: {
+          id: parseInt(req.params.id),
+        },
+        relations: ["rankings"],
+      })
+    );
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });
