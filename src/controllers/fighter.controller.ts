@@ -4,7 +4,7 @@ import { ConnectionClosedEvent } from "typeorm";
 import { Fighter } from "../entities/Fighter";
 
 /**
- * @api {get} /fighters Get a list of all the Fighters
+ * @api {get} /fighter Get a list of all the Fighters
  * @apiVersion 0.1.0
  * @apiName GetFighters
  * @apiGroup Fighter
@@ -22,7 +22,7 @@ export const getFighters = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {get} /fighters/:id Get a fighter by id
+ * @api {get} /fighter/:id Get a fighter by id
  * @apiVersion 0.1.0
  * @apiName GetFighter
  * @apiGroup Fighter
@@ -48,9 +48,8 @@ export const getFighters = async (req: Request, res: Response) => {
  */
 export const getFighter = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id);
     return res.json(
-      await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) })
+      await Fighter.findOneBy({ id: parseInt(req.params.id) })
     );
   } catch (error) {
     if (error instanceof Error)
@@ -59,7 +58,7 @@ export const getFighter = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {post} /fighters Create a new Fighter
+ * @api {post} /fighter Create a new Fighter
  * @apiVersion 0.1.0
  * @apiName CreateFighter
  * @apiGroup Fighter
@@ -122,7 +121,7 @@ export const createFighter = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {put} /fighters/:id Updates a Fighter with the given id
+ * @api {put} /fighter/:id Updates a Fighter with the given id
  * @apiVersion 0.1.0
  * @apiName UpdateFighter
  * @apiGroup Fighter
@@ -149,10 +148,10 @@ export const createFighter = async (req: Request, res: Response) => {
  */
 export const updateFighter = async (req: Request, res: Response) => {
   try {
-    const f = await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) });
+    const f = await Fighter.findOneBy({ id: parseInt(req.params.id) });
     if (!f) return res.status(404).json({ message: "Fighter not found" });
 
-    await Fighter.update({ fighter_id: parseInt(req.params.id) }, req.body);
+    await Fighter.update({ id: parseInt(req.params.id) }, req.body);
     return res.status(200).json({ message: "Fighter updated" });
   } catch (error) {
     if (error instanceof Error)
@@ -161,7 +160,7 @@ export const updateFighter = async (req: Request, res: Response) => {
 };
 
 /**
- * @api {delete} /fighters/:id Deletes a Fighter with the given id
+ * @api {delete} /fighter/:id Deletes a Fighter with the given id
  * @apiVersion 0.1.0
  * @apiName FeleteFighter
  * @apiGroup Fighter
@@ -174,10 +173,10 @@ export const updateFighter = async (req: Request, res: Response) => {
  */
 export const deleteFighter = async (req: Request, res: Response) => {
   try {
-    const f = await Fighter.findOneBy({ fighter_id: parseInt(req.params.id) });
+    const f = await Fighter.findOneBy({ id: parseInt(req.params.id) });
     if (!f) return res.status(404).json({ message: "Fighter not found" });
 
-    await Fighter.delete({ fighter_id: parseInt(req.params.id) });
+    await Fighter.delete({ id: parseInt(req.params.id) });
     return res.status(200).json({ message: "Fighter deleted" });
   } catch (error) {
     if (error instanceof Error)
