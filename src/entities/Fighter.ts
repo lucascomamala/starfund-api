@@ -7,12 +7,15 @@ import {
   BaseEntity,
 } from "typeorm";
 
+import { IsInt, Length, Max, Min } from "class-validator";
+
 @Entity()
 export class Fighter extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
+  @Length(2, 40)
   name: string;
 
   @Column({
@@ -64,11 +67,17 @@ export class Fighter extends BaseEntity {
   @Column({
     nullable: true,
   })
+  @IsInt()
+  @Min(40000)
+  @Max(200000)
   last_weight_grams: number;
 
   @Column({
     nullable: true,
   })
+  @IsInt()
+  @Min(0)
+  @Max(350)
   height_cm: number;
 
   @Column({
