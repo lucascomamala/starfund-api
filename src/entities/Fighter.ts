@@ -15,9 +15,13 @@ import {
   IsUrl,
   Min,
   Length,
+  IsEnum,
 } from "class-validator";
 
 import { Fight } from "./Fight";
+import { Ranking } from "./Ranking";
+
+import WeightClass from "../utils/weight_class";
 
 @Entity()
 export class Fighter extends BaseEntity {
@@ -51,6 +55,7 @@ export class Fighter extends BaseEntity {
 
   @Column({ nullable: true })
   @IsOptional()
+  @IsEnum(WeightClass)
   weight_class: string;
 
   @Column({ nullable: true })
@@ -92,6 +97,9 @@ export class Fighter extends BaseEntity {
 
   @OneToMany(() => Fight, (fight: Fight) => fight.loser)
   fightsAsLoser: Fight[];
+
+  @OneToMany(() => Ranking, (ranking) => ranking.fighter)
+  rankings: Ranking[];
 
   @CreateDateColumn()
   createdAt: Date;
