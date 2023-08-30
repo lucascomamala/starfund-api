@@ -13,6 +13,7 @@ app.use(express.json());
 
 // Routes
 app.use(fighterRoutes);
+app.use(eventRoutes);
 
 // Start server
 async function main() {

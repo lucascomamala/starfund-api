@@ -29,10 +29,10 @@ export const getFighters = async (req: Request, res: Response) => {
  * @apiParam {Number} id <code>id</code> of the fighter.
  *
  * @apiSuccess {String} name Fighter's full name
- * @apiSuccess {Number} wins=0 Number of wins
- * @apiSuccess {Number} losses=0 Number of losses
- * @apiSuccess {Number} knockouts=0 Number of knockouts
- * @apiSuccess {Number} submissions=0 Number of submissions
+ * @apiSuccess {Number} wins Number of wins
+ * @apiSuccess {Number} losses Number of losses
+ * @apiSuccess {Number} knockouts Number of knockouts
+ * @apiSuccess {Number} submissions Number of submissions
  * @apiSuccess {String} weight_class Fighter's weight class
  * @apiSuccess {String} nationality Fighter's nationality
  * @apiSuccess {String} team Fighter's team
@@ -62,18 +62,18 @@ export const getFighter = async (req: Request, res: Response) => {
  * @apiPermission none
  *
  * @apiBody {String} name Fighter's full name
- * @apiBody {Number} wins=0 Number of wins
- * @apiBody {Number} losses=0 Number of losses
- * @apiBody {Number} knockouts=0 Number of knockouts
- * @apiBody {Number} submissions=0 Number of submissions
  * @apiBody {String} weight_class Fighter's weight class
- * @apiBody {String} nationality Fighter's nationality
- * @apiBody {String} team Fighter's team
- * @apiBody {String} nickname Fighter's nickname
- * @apiBody {Date} date_of_birth Fighter's date of birth
- * @apiBody {Number} height_cm Fighter's height in centimeters
- * @apiBody {Number} last_weight_grams Fighter's last weight in grams
- * @apiBody {String} image_path Path to the Fighter's image
+ * @apiBody {Number} [wins=0] Number of wins
+ * @apiBody {Number} [losses=0] Number of losses
+ * @apiBody {Number} [knockouts=0] Number of knockouts
+ * @apiBody {Number} [submissions=0] Number of submissions
+ * @apiBody {String} [nationality] Fighter's nationality
+ * @apiBody {String} [team] Fighter's team
+ * @apiBody {String} [nickname] Fighter's nickname
+ * @apiBody {Date} [date_of_birth] Fighter's date of birth
+ * @apiBody {Number} [height_cm] Fighter's height in centimeters
+ * @apiBody {Number} [last_weight_grams] Fighter's last weight in grams
+ * @apiBody {String} [image_path] Path to the Fighter's image
  *
  */
 export const createFighter = async (req: Request, res: Response) => {
@@ -127,18 +127,18 @@ export const createFighter = async (req: Request, res: Response) => {
  * @apiParam {Number} id <code>id</code> of the fighter.
  *
  * @apiBody {String} name Fighter's full name
- * @apiBody {Number} wins Number of wins
- * @apiBody {Number} losses Number of losses
- * @apiBody {Number} knockouts Number of knockouts
- * @apiBody {Number} submissions Number of submissions
  * @apiBody {String} weight_class Fighter's weight class
- * @apiBody {String} nationality Fighter's nationality
- * @apiBody {String} team Fighter's team
- * @apiBody {String} nickname Fighter's nickname
- * @apiBody {Date} date_of_birth Fighter's date of birth
- * @apiBody {Number} height_cm Fighter's height in centimeters
- * @apiBody {Number} last_weight_grams Fighter's last weight in grams
- * @apiBody {String} image_path Path to the Fighter's image
+ * @apiBody {Number} [wins] Number of wins
+ * @apiBody {Number} [losses] Number of losses
+ * @apiBody {Number} [knockouts] Number of knockouts
+ * @apiBody {Number} [submissions] Number of submissions
+ * @apiBody {String} [nationality] Fighter's nationality
+ * @apiBody {String} [team] Fighter's team
+ * @apiBody {String} [nickname] Fighter's nickname
+ * @apiBody {Date} [date_of_birth] Fighter's date of birth
+ * @apiBody {Number} [height_cm] Fighter's height in centimeters
+ * @apiBody {Number} [last_weight_grams] Fighter's last weight in grams
+ * @apiBody {String} [image_path] Path to the Fighter's image
  *
  * @apiError FighterNotFound   The <code>id</code> of the Fighter was not found.
  *

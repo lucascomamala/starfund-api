@@ -27,12 +27,13 @@ export class Event extends BaseEntity {
   @IsNotEmpty()
   location: string;
 
-  @Column({ nullable: true })
-  @IsOptional()
+  @Column()
+  @IsNotEmpty()
   venue: string;
 
   @Column({ type: "date" })
   @IsDateString()
+  @IsNotEmpty()
   date: Date;
 
   // Define the relationship with the Fight entity

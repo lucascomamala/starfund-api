@@ -58,7 +58,7 @@ export class Fighter extends BaseEntity {
   submissions: number;
 
   @Column({ nullable: true })
-  @IsOptional()
+  @IsNotEmpty()
   @IsEnum(WeightClass)
   weight_class: string;
 
