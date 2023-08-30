@@ -193,6 +193,8 @@ export const deleteEvent = async (req: Request, res: Response) => {
  * @apiVersion 0.1.0
  * @apiName GetUpcomingEvents
  * @apiGroup Event
+ * 
+ * @apiDescription Gets a list of all events from today's date forward
  *
  * @apiSuccess {Event[]} events List of Events
  */

@@ -58,6 +58,8 @@ export const getFight = async (req: Request, res: Response) => {
  * @apiVersion 0.1.0
  * @apiName CreateFight
  * @apiGroup Fight
+ * 
+ * @apiDescription Upon creating a new fight the fighters (both winner and loser) rankings will be updated
  *
  * @apiBody {Number} event_id Event ID associated with the fight
  * @apiBody {Number} winner_id Winner fighter's ID
