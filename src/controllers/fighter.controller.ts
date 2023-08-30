@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ConnectionClosedEvent } from "typeorm";
 
 import { Fighter } from "../entities/Fighter";
 
@@ -48,9 +47,7 @@ export const getFighters = async (req: Request, res: Response) => {
  */
 export const getFighter = async (req: Request, res: Response) => {
   try {
-    return res.json(
-      await Fighter.findOneBy({ id: parseInt(req.params.id) })
-    );
+    return res.json(await Fighter.findOneBy({ id: parseInt(req.params.id) }));
   } catch (error) {
     if (error instanceof Error)
       return res.status(500).json({ message: error.message });

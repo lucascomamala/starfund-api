@@ -3,7 +3,8 @@ import morgan from "morgan";
 import "reflect-metadata";
 
 import { AppDataSource } from "./db";
-import fightersRoutes from "./routes/fighters.routes";
+import fighterRoutes from "./routes/fighter.routes";
+import eventRoutes from "./routes/event.routes";
 
 // Create express app and middlewares
 const app = express();
@@ -11,7 +12,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Routes
-app.use(fightersRoutes);
+app.use(fighterRoutes);
 
 // Start server
 async function main() {
