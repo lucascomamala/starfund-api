@@ -22,6 +22,7 @@ export class Ranking extends BaseEntity {
   @IsEnum(WeightClass)
   category: WeightClass;
 
+  // Define the relationship with the Fighter entity
   @ManyToOne(() => Fighter)
   @IsNotEmpty()
   fighter: Fighter;

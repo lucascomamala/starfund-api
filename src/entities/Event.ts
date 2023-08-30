@@ -38,6 +38,7 @@ export class Event extends BaseEntity {
   @OneToMany(() => Fight, (fight: Fight) => fight.event)
   fights: Fight[];
 
+  // Define the relationship with the EventFighter entity (join table)
   @OneToMany(() => EventFighter, (eventFighter) => eventFighter.event)
   eventFighters: EventFighter[];
 

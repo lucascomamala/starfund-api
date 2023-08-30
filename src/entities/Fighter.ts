@@ -93,15 +93,19 @@ export class Fighter extends BaseEntity {
   @IsUrl()
   image_path: string;
 
+  // Define the relationship with the Fight entity (winners)
   @OneToMany(() => Fight, (fight: Fight) => fight.winner)
   fightsAsWinner: Fight[];
 
+  // Define the relationship with the Fight entity (losers)
   @OneToMany(() => Fight, (fight: Fight) => fight.loser)
   fightsAsLoser: Fight[];
 
+  // Define the relationship with the Ranking entity
   @OneToMany(() => Ranking, (ranking) => ranking.fighter)
   rankings: Ranking[];
 
+  // Define the relationship with the EventFighter entity (join table)
   @OneToMany(() => EventFighter, (eventFighter) => eventFighter.fighter)
   eventFighters: EventFighter[];
 

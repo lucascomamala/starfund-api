@@ -26,14 +26,17 @@ export class Fight extends BaseEntity {
   @PrimaryGeneratedColumn()
   fight_id: number;
 
+  // Define the relationship with the Event entity
   @ManyToOne(() => Event, (event: Event) => event.fights)
   @IsNotEmpty()
   event: Event;
 
+  // Define the relationship with the Fighter entity (winners)
   @ManyToOne(() => Fighter, (fighter: Fighter) => fighter.fightsAsWinner)
   @IsNotEmpty()
   winner: Fighter;
 
+  // Define the relationship with the Fighter entity (losers)
   @ManyToOne(() => Fighter, (fighter: Fighter) => fighter.fightsAsLoser)
   @IsNotEmpty()
   loser: Fighter;
