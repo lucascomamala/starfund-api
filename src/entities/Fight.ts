@@ -38,9 +38,10 @@ export class Fight extends BaseEntity {
   @IsNotEmpty()
   loser: Fighter;
 
-  @Column()
+  @Column({ nullable: true })
   @IsInt()
   @Min(1)
+  @IsOptional()
   last_round: number;
 
   @Column({ nullable: true })
@@ -48,7 +49,8 @@ export class Fight extends BaseEntity {
   @Length(2, 50)
   referee: string;
 
-  @Column()
+  @Column({ nullable: true })
+  @IsOptional()
   win_condition: string;
 
   @CreateDateColumn()

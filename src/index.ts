@@ -6,6 +6,7 @@ import { AppDataSource } from "./db";
 import fighterRoutes from "./routes/fighter.routes";
 import eventRoutes from "./routes/event.routes";
 import rankingRoutes from "./routes/ranking.routes";
+import fightRoutes from "./routes/fight.routes";
 
 // Create express app and middlewares
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(fighterRoutes);
 app.use(eventRoutes);
 app.use(rankingRoutes);
+app.use(fightRoutes);
 
 // Start server
 async function main() {
